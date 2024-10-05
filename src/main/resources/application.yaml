@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: examinism
+  data:
+    mongodb:
+      uri: "mongodb://mymongo:nammango@localhost:27017/"
+      database: examinism

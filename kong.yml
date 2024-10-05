@@ -1,0 +1,13 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - host: httpbin.org
+    name: question_service
+    port: 80
+    protocol: http
+    routes:
+      - name: secure_route
+        paths:
+          - /mock
+        strip_path: true
