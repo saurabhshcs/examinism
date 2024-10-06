@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,16 +50,21 @@ class QuestionControllerTest {
         verify(questionService, times(1)).getAllQuestions();
     }
 
-    // Positive Scenario: Test inserting a question successfully
-    // @Test
-    // void testInsertQuestion_Success(){
-    //     doNothing().when(questionService).insertQuestion(any(Question.class));
+@Test
+void testInsertQuestion_Success(){
+    // Mock the insertQuestion method to return the question object when called
+    when(questionService.insertQuestion(any(Question.class))).thenReturn(question);
 
-    //     ResponseEntity<HttpStatus> response = questionController.insertQuestion(question);
+    // Call the insertQuestion method
+    ResponseEntity<HttpStatus> response = questionController.insertQuestion(question);
 
-    //     assertEquals(HttpStatus.CREATED, response.getStatusCode());
-    //     verify(questionService, times(1)).insertQuestion(question);
-    // }
+    // Assert that the response status is HttpStatus.CREATED
+    assertEquals(HttpStatus.CREATED, response.getStatusCode());
+
+    // Verify that the service's insertQuestion method was called exactly once
+    verify(questionService, times(1)).insertQuestion(question);
+}
+
 
     // Negative Scenario: Test getting a question by ID when the question is not found
     @Test
