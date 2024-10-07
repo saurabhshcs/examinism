@@ -23,6 +23,10 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class QuestionControllerTest {
 
+    private static final String NO_QUESTION_FOUND_FOR_ID_123 = "No Question found for id: 123";
+
+    private static final String TEST_QUESTION_1 = "What is Java?";
+
     @Mock
     private QuestionService questionService;
 
@@ -46,7 +50,7 @@ class QuestionControllerTest {
         List<Question> result = questionController.getAllQuestions();
 
         assertEquals(1, result.size());
-        assertEquals("What is Java?", result.get(0).getDescription());
+        assertEquals(TEST_QUESTION_1, result.get(0).getDescription());
         verify(questionService, times(1)).getAllQuestions();
     }
 
@@ -75,7 +79,7 @@ void testInsertQuestion_Success(){
         try {
             questionController.getQuestion(questionId);
         } catch (QuestionException ex) {
-            assertEquals("No Question found for id: 123", ex.getMessage());
+            assertEquals(NO_QUESTION_FOUND_FOR_ID_123, ex.getMessage());
         }
 
         verify(questionService, times(1)).getQuestionById(questionId);
@@ -95,7 +99,7 @@ void testInsertQuestion_Success(){
 
     private Question questionMaker(){
         return Question.builder()
-                .description("What is Java?")
+                .description(TEST_QUESTION_1)
                 .complexity(0)
                 .build();
     }
